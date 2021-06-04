@@ -69,16 +69,15 @@ public class EcomerceApplication implements CommandLineRunner{
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São paulo");
 	
-		estRepo.saveAll(Arrays.asList(est1, est2));
-	
 		Cidade c1 = new Cidade(null, "Uberlandia", est1);
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
 		
-		cidRepo.saveAll(Arrays.asList(c1, c2, c3));
-		
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
+		
+		estRepo.saveAll(Arrays.asList(est1, est2));
+		cidRepo.saveAll(Arrays.asList(c1, c2, c3));
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com" ,"5645346767", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("00940294054", "2565532432"));
