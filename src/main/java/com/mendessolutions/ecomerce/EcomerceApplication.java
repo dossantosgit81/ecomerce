@@ -13,6 +13,7 @@ import com.mendessolutions.ecomerce.domain.Cidade;
 import com.mendessolutions.ecomerce.domain.Cliente;
 import com.mendessolutions.ecomerce.domain.Endereco;
 import com.mendessolutions.ecomerce.domain.Estado;
+import com.mendessolutions.ecomerce.domain.ItemPedido;
 import com.mendessolutions.ecomerce.domain.Pagamento;
 import com.mendessolutions.ecomerce.domain.PagamentoComBoleto;
 import com.mendessolutions.ecomerce.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.mendessolutions.ecomerce.repositories.CidadeRepository;
 import com.mendessolutions.ecomerce.repositories.ClienteRepository;
 import com.mendessolutions.ecomerce.repositories.EnderecoRepository;
 import com.mendessolutions.ecomerce.repositories.EstadoRepository;
+import com.mendessolutions.ecomerce.repositories.ItemPedidoRepository;
 import com.mendessolutions.ecomerce.repositories.PagamentoRepository;
 import com.mendessolutions.ecomerce.repositories.PedidoRepository;
 import com.mendessolutions.ecomerce.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class EcomerceApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PagamentoRepository pagRepo;
+	
+	@Autowired
+	private ItemPedidoRepository itemRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcomerceApplication.class, args);
@@ -119,6 +124,19 @@ public class EcomerceApplication implements CommandLineRunner{
 		
 		pedRepo.saveAll(Arrays.asList(ped1, ped2));
 		pagRepo.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(p1, ped1, 00.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(p3, ped1, 00.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(p2, ped2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemRepo.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 
